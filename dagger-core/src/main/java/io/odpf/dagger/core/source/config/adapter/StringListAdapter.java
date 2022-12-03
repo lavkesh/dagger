@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class SourceParquetFilePathsAdapter extends TypeAdapter<String[]> {
+public class StringListAdapter extends TypeAdapter<String[]> {
     @Override
     public void write(JsonWriter jsonWriter, String[] strings) {
     }
@@ -16,8 +16,8 @@ public class SourceParquetFilePathsAdapter extends TypeAdapter<String[]> {
     @Override
     public String[] read(JsonReader jsonReader) throws IOException {
         Gson gson = new Gson();
-        String[] filePathArray = gson.fromJson(jsonReader, String[].class);
-        return Arrays.stream(filePathArray)
+        String[] stringArray = gson.fromJson(jsonReader, String[].class);
+        return Arrays.stream(stringArray)
                 .map(String::valueOf)
                 .map(String::trim).toArray(String[]::new);
     }

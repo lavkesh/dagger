@@ -4,7 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import io.odpf.dagger.core.source.config.adapter.DaggerSASLMechanismAdaptor;
 import io.odpf.dagger.core.source.config.adapter.DaggerSecurityProtocolAdaptor;
 import io.odpf.dagger.core.source.config.adapter.FileDateRangeAdaptor;
-import io.odpf.dagger.core.source.config.adapter.SourceParquetFilePathsAdapter;
+import io.odpf.dagger.core.source.config.adapter.StringListAdapter;
 import io.odpf.dagger.core.source.config.models.SourceDetails;
 import io.odpf.dagger.core.source.config.models.SourceName;
 import io.odpf.dagger.core.source.config.models.SourceType;
@@ -106,7 +106,7 @@ public class StreamConfig {
 
     @SerializedName(STREAM_SOURCE_PARQUET_FILE_PATHS_KEY)
     @Getter
-    @JsonAdapter(value = SourceParquetFilePathsAdapter.class)
+    @JsonAdapter(value = StringListAdapter.class)
     private String[] parquetFilePaths;
 
     @SerializedName(STREAM_SOURCE_PARQUET_READ_ORDER_STRATEGY_KEY)
@@ -120,6 +120,31 @@ public class StreamConfig {
     @JsonAdapter(FileDateRangeAdaptor.class)
     @Getter
     private TimeRangePool parquetFileDateRange;
+
+    @SerializedName(SOURCE_BIGQUERY_START_TIME)
+    @Getter
+    private String bigqueryStartTime;
+
+    @SerializedName(SOURCE_BIGQUERY_END_TIME)
+    @Getter
+    private String bigqueryEndTime;
+
+    @SerializedName(SOURCE_BIGQUERY_GOOGLE_PROJECT_ID)
+    @Getter
+    private String bigqueryGoogleProjectId;
+
+    @SerializedName(SOURCE_BIGQUERY_DATASET_NAME)
+    @Getter
+    private String bigqueryDatasetName;
+
+    @SerializedName(SOURCE_BIGQUERY_TABLE_NAME)
+    @Getter
+    private String bigqueryTableName;
+
+    @SerializedName(SOURCE_BIGQUERY_TABLE_FIELDS)
+    @Getter
+    @JsonAdapter(value = StringListAdapter.class)
+    private String[] bigqueryTableFields;
 
     public String getDataType() {
         if (dataType == null) {

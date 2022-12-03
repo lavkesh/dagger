@@ -5,6 +5,7 @@ import io.odpf.dagger.core.metrics.reporters.statsd.SerializedStatsDReporterSupp
 import io.odpf.dagger.common.serde.DaggerDeserializer;
 import io.odpf.dagger.core.exception.InvalidDaggerSourceException;
 import io.odpf.dagger.core.metrics.reporters.statsd.StatsDErrorReporter;
+import io.odpf.dagger.core.source.bigquery.BigqueryDaggerSource;
 import io.odpf.dagger.core.source.config.StreamConfig;
 import io.odpf.dagger.core.source.flinkkafkaconsumer.FlinkKafkaConsumerDaggerSource;
 import io.odpf.dagger.core.source.kafka.KafkaDaggerSource;
@@ -36,7 +37,8 @@ public class DaggerSourceFactory {
         KafkaDaggerSource kafkaDaggerSource = new KafkaDaggerSource(streamConfig, configuration, deserializer);
         FlinkKafkaConsumerDaggerSource flinkKafkaConsumerDaggerSource = new FlinkKafkaConsumerDaggerSource(streamConfig, configuration, deserializer);
         ParquetDaggerSource parquetDaggerSource = new ParquetDaggerSource(streamConfig, configuration, deserializer, statsDReporterSupplier);
-        return Stream.of(kafkaDaggerSource, flinkKafkaConsumerDaggerSource, parquetDaggerSource)
+        BigqueryDaggerSource bigqueryDaggerSource = new BigqueryDaggerSource(streamConfig, configuration, deserializer);
+        return Stream.of(kafkaDaggerSource, flinkKafkaConsumerDaggerSource, parquetDaggerSource, bigqueryDaggerSource)
                 .collect(Collectors.toList());
     }
 }

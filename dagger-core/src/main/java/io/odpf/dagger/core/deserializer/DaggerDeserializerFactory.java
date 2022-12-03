@@ -32,7 +32,8 @@ public class DaggerDeserializerFactory {
         return Stream.of(
                         new JsonDeserializerProvider(streamConfig),
                         new ProtoDeserializerProvider(streamConfig, configuration, stencilClientOrchestrator),
-                        new SimpleGroupDeserializerProvider(streamConfig, configuration, stencilClientOrchestrator))
+                        new SimpleGroupDeserializerProvider(streamConfig, configuration, stencilClientOrchestrator),
+                        new BigqueryAvroDeserializerProvider(streamConfig, configuration))
                 .collect(Collectors.toList());
     }
 }

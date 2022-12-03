@@ -61,7 +61,7 @@ configurations {
 dependencies {
     minimalJar project(path: ':dagger-common', configuration: 'minimalCommonJar')
     minimalJar project(path: ':dagger-functions', configuration: 'minimalFunctionsJar')
-    minimalJar('io.odpf:depot:0.3.1') {
+    minimalJar('io.odpf:depot:0.3.6') {
         exclude group: 'org.apache.httpcomponents'
         exclude module: 'stencil', group: 'io.odpf'
         exclude group: 'com.google.protobuf'
@@ -85,7 +85,9 @@ dependencies {
     dependenciesJar 'com.google.protobuf:protobuf-java-util:3.1.0'
     dependenciesJar 'org.influxdb:influxdb-java:2.8'
     dependenciesJar 'org.elasticsearch.client:elasticsearch-rest-client:6.6.1'
-    dependenciesJar 'com.google.cloud.bigtable:bigtable-hbase-2.x:1.11.0'
+    dependenciesJar ('com.google.cloud.bigtable:bigtable-hbase-2.x:1.11.0'){
+        exclude group: "io.grpc"
+    }
     dependenciesJar 'org.asynchttpclient:async-http-client:2.10.1'
     dependenciesJar 'io.vertx:vertx-pg-client:3.9.0'
     dependenciesJar 'org.apache.commons:commons-pool2:2.4.3'
@@ -291,5 +293,17 @@ task runFlink(type: JavaExec, dependsOn: classes) {
     main = mainClassName
     classpath = sourceSets.main.runtimeClasspath
     environment properties
+}
+
+task findJarsForClass {
+    doLast {
+//        def findMe = 'org/apache/commons/beanutils/PropertyUtilsBean.class'
+        def findMe = 'io/grpc/googleapis/GoogleCloudToProdExperimentalNameResolverProvider.class'
+        def matches = configurations.runtime.findAll { f ->
+            f.name.endsWith('.jar') &&
+                    !(zipTree(f).matching { include findMe }.empty)
+        }
+        println "Found $findMe in ${matches*.name}"
+    }
 }
 

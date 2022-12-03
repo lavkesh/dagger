@@ -8,13 +8,13 @@ import java.io.StringReader;
 
 import static org.junit.Assert.assertArrayEquals;
 
-public class SourceParquetFilePathsAdapterTest {
+public class StringListAdapterTest {
     @Test
     public void shouldDeserializeJsonArrayToStringArray() throws IOException {
         String parquetFilePathJSONString = "[\"gs://something\", \"gs://anything\"]";
         JsonReader reader = new JsonReader(new StringReader(parquetFilePathJSONString));
 
-        SourceParquetFilePathsAdapter adapter = new SourceParquetFilePathsAdapter();
+        StringListAdapter adapter = new StringListAdapter();
 
         assertArrayEquals(new String[]{"gs://something", "gs://anything"}, adapter.read(reader));
     }
@@ -24,7 +24,7 @@ public class SourceParquetFilePathsAdapterTest {
         String parquetFilePathJSONString = "[]";
         JsonReader reader = new JsonReader(new StringReader(parquetFilePathJSONString));
 
-        SourceParquetFilePathsAdapter adapter = new SourceParquetFilePathsAdapter();
+        StringListAdapter adapter = new StringListAdapter();
 
         assertArrayEquals(new String[]{}, adapter.read(reader));
     }
@@ -34,7 +34,7 @@ public class SourceParquetFilePathsAdapterTest {
         String parquetFilePathJSONString = "[null, \"gs://anything\"]";
         JsonReader reader = new JsonReader(new StringReader(parquetFilePathJSONString));
 
-        SourceParquetFilePathsAdapter adapter = new SourceParquetFilePathsAdapter();
+        StringListAdapter adapter = new StringListAdapter();
 
         assertArrayEquals(new String[]{"null", "gs://anything"}, adapter.read(reader));
     }
@@ -45,7 +45,7 @@ public class SourceParquetFilePathsAdapterTest {
 
         JsonReader reader = new JsonReader(new StringReader(parquetFilePathJSONString));
 
-        SourceParquetFilePathsAdapter adapter = new SourceParquetFilePathsAdapter();
+        StringListAdapter adapter = new StringListAdapter();
 
         assertArrayEquals(new String[]{"null", "gs://something", "gs://anything"}, adapter.read(reader));
     }

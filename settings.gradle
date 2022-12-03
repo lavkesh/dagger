@@ -1,6 +1,8 @@
 rootProject.name = 'dagger'
 
+include 'flink-source'
 include 'dagger-core'
 include 'dagger-common'
 include 'dagger-functions'
 include 'dagger-tests'
+
