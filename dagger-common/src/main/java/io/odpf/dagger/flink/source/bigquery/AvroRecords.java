@@ -38,7 +38,10 @@ public class AvroRecords {
     }
 
     public Row next() {
-        return queue.poll();
+        if(more()) {
+            return queue.poll();
+        }
+        return null;
     }
 
     public boolean more() {
@@ -50,6 +53,7 @@ public class AvroRecords {
             BinaryDecoder decoder = DecoderFactory.get().binaryDecoder(inputStream, null);
             while (!decoder.isEnd()) {
                 record = datumReader.read(record, decoder);
+                //copy record and emit.
                 Row row = AvroToRowUtils.convertAvroRecordToRow(schema, typeInfo, record, 2);
                 row.setField(row.getArity() - 2, true);
                 row.setField(row.getArity() - 1, Timestamp.from(Instant.ofEpochSecond(100, 100)));

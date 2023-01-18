@@ -61,7 +61,7 @@ public class BigQuerySplitReader implements SplitReader<Row, BigQuerySplit> {
     }
 
     private void checkSplitOrStartNext() throws IOException {
-        if (iterator != null && iterator.hasNext()) {
+        if (iterator != null) {
             return;
         }
         final BigQuerySplit nextSplit = splits.poll();

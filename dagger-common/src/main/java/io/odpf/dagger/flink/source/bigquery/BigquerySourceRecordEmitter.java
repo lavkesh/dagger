@@ -12,7 +12,7 @@ public class BigquerySourceRecordEmitter implements RecordEmitter<Row, Row, BigQ
 
     @Override
     public void emitRecord(Row element, SourceOutput<Row> output, BigQuerySplitState splitState) throws Exception {
-        System.out.println(element);
+  //      System.out.println(element);
         // We Can put  deserializer here.
         output.collect(element);
     }
